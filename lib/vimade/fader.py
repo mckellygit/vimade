@@ -247,7 +247,12 @@ def update(nextState = None):
     if not win in nextWindows:
       expr.append('win_id2tabwin('+win+')')
       ids.append(win)
-  expr = util.eval_and_return('[' + ','.join(expr) + ']')
+
+  try:
+    expr = util.eval_and_return('[' + ','.join(expr) + ']')
+  except:
+    pass
+
   i = 0
   for item in expr:
     if item[0] == '0' and item[1] == '0':
