@@ -24,14 +24,21 @@ function! vimade#CreateGlobals()
     elseif has('python')
       let g:vimade_py_cmd = "py"
     else
-      finish
+      try
+        finish
+      catch /E168:/
+        return
+      endtry
     endif
   endif
 
-  exec g:vimade_py_cmd  join([
-      \ "import vim",
-      \ "sys.path.append(vim.eval('g:vimade_plugin_current_directory'))",
-  \ ], "\n")
+  try
+    exec g:vimade_py_cmd  join([
+        \ "import vim",
+        \ "sys.path.append(vim.eval('g:vimade_plugin_current_directory'))",
+    \ ], "\n")
+  catch
+  endtry
 
 endfunction
 function! vimade#GetFeatures()
